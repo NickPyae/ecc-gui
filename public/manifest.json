@@ -1,6 +1,6 @@
 {
-  "short_name": "DDS App",
-  "name": "Create DDS App Sample",
+  "short_name": "HelloSally",
+  "name": "HelloSally",
   "icons": [
     {
       "src": "favicon.ico",

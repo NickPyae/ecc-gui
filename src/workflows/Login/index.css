@@ -1,0 +1,98 @@
+.heading {
+  background: var(--dds-color-brand-blue);
+  color: var(--dds-color-white);
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 auto;
+}
+
+.branding-logo {
+  height: 25px;
+}
+
+.heading-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1 0 auto;
+  text-align: center;
+}
+
+.title,
+.subtile {
+  color: inherit;
+}
+
+.main-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.product-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  flex: 1 0 auto;
+}
+
+.branding-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1 0 auto;
+}
+
+.login-section {
+  padding: var(--dds-space-medium);
+  display: flex;
+  flex: 1 0 auto;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.login-section form {
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 auto;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.login-section form label {
+  margin: 1rem;
+}
+
+.footer {
+  flex-shrink: 0;
+}
+
+input {
+  border: 1px solid var(--dds-color-gray);
+  padding: var(--dds-space-x-small);
+}
+
+input.error {
+  border: 1px solid var(--dds-color-danger);
+}
+
+.input-error {
+  text-align: left;
+  color: var(--dds-color-danger);
+  font-size: var(--dds-font-size-x-small);
+}
+
+input:focus,
+input:active {
+  border: 1px solid var(--dds-color-brand-blue);
+  outline: none;
+}
+
+.submit-section {
+  display: flex;
+}
+
+.submit-section dds-button {
+  width: 100%;
+}

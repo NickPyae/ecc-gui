@@ -1,0 +1,17 @@
+.services table {
+  width: 100%;
+  border: 1px solid var(--dds-color-black);
+}
+
+.services table thead {
+  border: 1px solid var(--dds-color-black);
+}
+
+.services table tbody {
+  text-align: center;
+}
+
+.services table th,
+.services table td {
+  padding: 1rem;
+}

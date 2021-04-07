@@ -1,0 +1,43 @@
+form {
+  display: flex;
+  flex: 1 0 auto;
+}
+
+form label {
+  margin: 1rem 0;
+}
+
+form select {
+  width: 150px;
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-left: var(--dds-space-medium);
+  margin-right: auto;
+}
+
+.submit-button-wrapper {
+  text-align: right;
+}
+
+div[slot="dds-dialog-body"] {
+  display: flex;
+  flex-direction: column;
+}
+
+.services table {
+  width: 100%;
+  border: 1px solid var(--dds-color-black);
+}
+
+.services table thead {
+  border: 1px solid var(--dds-color-black);
+}
+
+.services table tbody {
+  text-align: center;
+}
+
+.services table th,
+.services table td {
+  padding: 1rem;
+}

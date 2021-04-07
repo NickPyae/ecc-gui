@@ -1,0 +1,19 @@
+.dashboard {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboard-status {
+  flex: 0 0 auto;
+  display: flex;
+}
+
+.dashboard-status dds-card {
+  width: 25%;
+  margin: 2rem;
+}
+
+.dashboard-status-table {
+  flex: 1 0 auto;
+}
