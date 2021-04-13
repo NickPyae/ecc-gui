@@ -60,7 +60,7 @@ function LoginPage({ authenticate, error }) {
           </div>
           <div className="branding-section">
             <footer className="footer text-center">
-              <small>© 2008-2020 Dell Inc. or its subsidiaries. All rights reserved.</small>
+              <small>© 2008-2021 Dell Inc. or its subsidiaries. All rights reserved.</small>
             </footer>
           </div>
         </div>

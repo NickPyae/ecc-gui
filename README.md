@@ -1,6 +1,95 @@
-# New Project
+# HelloSally - ECC GUI
 
 > ✨ Bootstrapped with Create DDS App (CDA).
+
+## Architecture
+
+ECC GUI is following a [Domain-Driven Design](https://en.wikipedia.org/wiki/Domain-driven_design) approach.
+
+In DDD, the taxonomy of a project should be tightly coupled to the business domain in order to make sure the following are respected:
+
+- The primary focus of the project is aligned with the core domain and domain logic,
+- The designs and especially the complex ones are based on a model of the domain,
+- Collaboration between technical and domain experts focuses on iteratively refine a conceptual model addressing particular domain problems.
+
+Other patterns ECC GUI relates to:
+
+- [naked objects pattern](https://en.wikipedia.org/wiki/Naked_objects),
+- [Event Sourcing](https://www.martinfowler.com/eaaDev/EventSourcing.html)
+
+### Event Sourcing
+
+Event sourcing is an architectural pattern which warrants that your entities do track their internal state by means of reading and committing events to an event store.
+
+Event sourcing comes with the following benefits:
+
+- Mitigate [object-relational impedance mismatch](https://en.wikipedia.org/wiki/Object%E2%80%93relational_impedance_mismatch):
+Event sourcing treats the data coming from the database as an append-only log of serialised events. Its goals is not to model the state for each entitity or relationships between these entities directly in the database schema. This simplifies the writing and the reading to and from the database.
+- Keep the history:
+Event sourcing allows us to know how we reached the state of an entity in addition to see its current state. That point is actually quite important as it brings additional benefits:
+
+  - Be able to analyse the event stream and derive important business information from it like things which were not though at the moment the event was designed,
+  - Make the system easier to test and debug. Commands and events can be simulated for test purposes. Issues can be replayed in a controlled environment to understand how an entity reached a bad state
+
+## Structure
+
+### Operations
+
+Operations represent the domain-related logic. This is a layer of abstraction exposing an event-based API for the aplication. They are broken up into different domains for separation of concerns.
+Everything within the operations folder is stateless and functional.
+
+#### Commands
+
+Commands contain the events for the subdomain they belong to.
+
+#### Constants
+
+Constants contain the constants for the commands.
+
+#### Saga (side effect manager)
+
+Saga catches the events defined within commands and dispatch them to the backend to be handled for instance.
+
+Another example for event-sourced systems would be polling. It will happen in the saga, looping until the backend has fully processed the request.
+
+#### Services
+
+The services provide an abstraction layer around the business logic. It allows the creation of clean interfaces the app can use in addition to process the data coming back from the backend. This is also the place where to handle errors.
+
+### Pages
+
+Pages are components used to display data and drop the user into workflows.
+
+#### Main (index.jsx)
+
+The main component orchestrating presentational components pulled from the components directory.
+
+#### Reducer
+
+The reducer catches different events to populate state for the page.
+
+#### Selector
+
+The selector namespaces the data for the reducer to prevent states stepping on each other.
+
+### Workflows
+
+Workflows are components used to add, change and interact with data.
+
+They offer more features than pages and are basically responses to events (a workflow could be triggered by an event which will be passing some data to it in returns).
+
+When working with workflows, it's important to keep them small and as much independent as possible. This makes it possible to compose simple workflows into a more complex workflow.
+
+> Difference between Pages and Workflows
+> The main difference between the two is the responsibility for reading and writing data flows. Pages are more for reading data where workflows are for writing data.
+
+### Shared
+
+Components, pages, workflows specific to a subpart of the application which will be needed and used accross multiple subparts will move into this folder.
+
+### Utils
+
+Helpers used in multiple components or operations too generic and too small to be considered a subpart of the application (which will belong to the shared folder).
 
 ## Available Scripts
 
