@@ -84,21 +84,21 @@ export const columns = [
       },
       {
         "name": "Heartbeat Interval Adjustement",
-        "prop": "heartbeatIntervalAdjustement",
+        "prop": "heartbeatIntervalsAdj",
         "type": "number",
         "size": 250,
         "sortable": true
       },
       {
         "name": "Heartbeat Minimum Interval",
-        "prop": "heartbeatIntervalAdjustement",
+        "prop": "heartbeatIntervalsMin",
         "type": "number",
         "size": 250,
         "sortable": true
       },
       {
         "name": "Heartbeat Maximum Interval",
-        "prop": "heartbeatIntervalAdjustement",
+        "prop": "heartbeatIntervalsMax",
         "type": "number",
         "size": 250,
         "sortable": true

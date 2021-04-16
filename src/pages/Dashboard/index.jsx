@@ -50,7 +50,7 @@ export function DashboardPage({ nodeDetails, getNodeDetails }) {
     <div className="dashboard">
       <div className="dashboard-status">
         {statusCards.map(({ type, title, count }) => (
-          <dds-card status={type} type="inline" header footer="false">
+          <dds-card status={type} type="inline" header footer="false" key={title}>
               <div slot="header">
                 <h1 className="dds-header-text-1">{title}</h1>
               </div>
