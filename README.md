@@ -93,6 +93,21 @@ Helpers used in multiple components or operations too generic and too small to b
 
 ## Available Scripts
 
+### npm install
+
+ECC-GUI is using Dell Design System for Product library, which is hosted on our private artifactory repo. So prior to running `npm install`, you will need to configure DDSp registry and disable strict SSL.
+
+```
+npm config set registry https://amaas-eos-drm1.cec.lab.emc.com/artifactory/api/npm/DDSp/
+npm set strict-ssl false
+npm install --save @dell/dds
+```
+
+Now you can install the application with:
+```
+npm install
+```
+
 ### npm start
 
 Runs the app in the development mode.
