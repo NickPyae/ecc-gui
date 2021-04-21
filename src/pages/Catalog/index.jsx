@@ -1,20 +1,39 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import './index.css';
 
-import { appListRequisition } from '../../operations/Application/commands';
+import { nodeListRequisition } from '../../operations/Node/commands';
+import { appListRequisition, appUninstallRequisition } from '../../operations/Application/commands';
 
 import DeploymentDialog from '../../workflows/Deploy';
 import { deployModalRequisitionShow } from '../../workflows/Deploy/commands';
 
 import DisplayDialog from '../../workflows/Display';
 import { displayModalRequisitionShow } from '../../workflows/Display/commands';
-import { selectInstalledApps, selectAvailableApps } from './selectors';
+import { selectInstalledApps, selectAvailableApps, selectPendingUninstall } from './selectors';
 
-export function CatalogPage({ installedApps = [], availableApps = [], getAppList, showDisplayModal, showDeployModal }) {
+export function CatalogPage(
+  {
+    installedApps,
+    availableApps,
+    getNodeList,
+    getAppList,
+    deleteApp,
+    showDisplayModal,
+    showDeployModal,
+    pendingUninstall
+  }) {
+  // TODO: Find a more elegant way.
   useEffect(() => {
+    if (installedApps) return;
+    getNodeList();
+  });
+
+  // TODO: Find a more elegant way.
+  useEffect(() => {
+    if (availableApps) return;
     getAppList();
   });
 
@@ -27,24 +46,24 @@ export function CatalogPage({ installedApps = [], availableApps = [], getAppList
         <dds-tab slot="header">Available Apps</dds-tab>
         <dds-tab-panel slot="panel">
           <div className="card-list">
-            {installedApps.map((app, index) => (
+            {(installedApps ?? []).map((app, index) => (
               <dds-card header="true" footer="true" key={'installed-app-card' + index}>
-                { index % 2 !== 0 ?
-                  <dds-progress size="large" variant="info" value="80">
-                    <span slot="label-top-text">Installing</span>
-                    <span slot="label-bottom-text">2 minutes remaining.</span>
+                { pendingUninstall ?
+                  <dds-progress value="25" variant="info" size="large" type="indeterminate">
+                    <span slot="label-top-text">Uninstalling...</span>
+                    {/* <span slot="label-bottom-text"></span> */}
                   </dds-progress>
                 : '' }
                 <div slot="header">
-                  <h1 className="dds-header-text-3 app-name">{app.label}</h1>
-                  <h2 className="dds-header-text-3 app-node">{app.device}</h2>
+                  <h1 className="dds-header-text-3 app-name">{app.name}</h1>
+                  {/* <h2 className="dds-header-text-3 app-node">{app.name}</h2> */}
                 </div>
                 <div slot="body">
-                  <p className="dds-body-text">{app.description}</p>
+                  <p className="dds-body-text">{app.pattern}</p>
                 </div>
                 <div slot="footer">
-                  <dds-button type="tertiary" disabled={index % 2 !== 0} onClick={() => showDisplayModal(app)}>More info</dds-button>
-                  <dds-button type="tertiary" disabled={index % 2 !== 0}>Uninstall</dds-button>
+                  <dds-button type="tertiary" onClick={() => showDisplayModal(app)}>More info</dds-button>
+                  <dds-button type="tertiary" onClick={() => deleteApp(app)}>Uninstall</dds-button>
                 </div>
               </dds-card>
             ))}
@@ -52,7 +71,7 @@ export function CatalogPage({ installedApps = [], availableApps = [], getAppList
         </dds-tab-panel>
         <dds-tab-panel slot="panel">
           <div className="card-list">
-            {availableApps.map((app, index) => (
+            {(availableApps ?? []).map((app, index) => (
               <dds-card header="true" footer="true" key={'available-app-card' + index}>
                 <div slot="header">
                   <h1 className="dds-header-text-3 app-name">{app.label}</h1>
@@ -75,7 +94,8 @@ export function CatalogPage({ installedApps = [], availableApps = [], getAppList
 export function mapStateToProps(state) {
   return {
     installedApps: selectInstalledApps(state),
-    availableApps: selectAvailableApps(state)
+    availableApps: selectAvailableApps(state),
+    pendingUninstall: selectPendingUninstall(state)
   };
 }
 
@@ -87,14 +107,22 @@ export function mapDispatchToProps(dispatch) {
     showDeployModal: app => {
       dispatch(deployModalRequisitionShow(app));
     },
+    getNodeList: () => {
+      dispatch(nodeListRequisition());
+    },
     getAppList: () => {
       dispatch(appListRequisition());
+    },
+    deleteApp: app => {
+      dispatch(appUninstallRequisition(app));
     }
   };
 }
 
 CatalogPage.propTypes = {
+  getNodeList: PropTypes.func.isRequired,
   getAppList: PropTypes.func.isRequired,
+  deleteApp: PropTypes.func.isRequired,
   showDisplayModal: PropTypes.func.isRequired,
   showDeployModal: PropTypes.func.isRequired
 }

@@ -1,4 +1,4 @@
-import React, { createRef, useEffect } from 'react';
+import React, { createRef, useState, useEffect } from 'react';
 import { connect } from "react-redux";
 import PropTypes from 'prop-types';
 import { selectApp, selectNodes, selectShow } from './selectors';
@@ -8,18 +8,22 @@ import { nodeListRequisition } from '../../operations/Node/commands';
 
 import './index.css';
 
-function DeploymentDialog({ show, hide, nodes = [], getNodeList, app, deploy }) {
-  const { label, device, description, version, requiredServices } = app || {};
+function DeploymentDialog({ show, hide, nodes, getNodeList, app, deploy }) {
+  const { label, device, description, version, services } = app || {};
 
   const dialog = createRef(null);
   const deployButton = createRef(null);
 
+  const [appName, setAppName] = useState('ohagent');
+
   useEffect(() => {
+    // TODO: Find a more elegant way.
+    if (nodes) return;
     getNodeList();
   });
 
   function handleDeployment() {
-    deploy({ node: device, app });
+    deploy({ ...app, id: appName });
     hide();
   }
 
@@ -48,10 +52,14 @@ function DeploymentDialog({ show, hide, nodes = [], getNodeList, app, deploy }) 
     };
   }, [dialog, hide]);
 
+  const handleNameInputChange = value => {
+    setAppName(value);
+  };
+
   return (
     <dds-dialog open={show} actions="false" ref={dialog}>
       <div slot="dds-dialog-header">
-        <h1 className="dds-header-text-1">{label} ({version})</h1>
+        <h1 className="dds-header-text-1">{label}</h1>
       </div>
       <div slot="dds-dialog-body">
         <p>{description}</p>
@@ -64,27 +72,26 @@ function DeploymentDialog({ show, hide, nodes = [], getNodeList, app, deploy }) 
                 <th>Arch</th>
                 <th>Org</th>
                 <th>Version</th>
-                <th>Version Range</th>
               </tr>
             </thead>
             <tbody>
-            {(requiredServices ?? []).map(({ label = 'N.A', arch = 'N.A', org = 'N.A', version = 'N.A', versionRange = 'N.A' }, index) => (
+            {(services ?? []).map(({ serviceUrl = 'N.A', serviceArch = 'N.A', serviceOrgid = 'N.A', serviceVersions = 'N.A' }, index) => (
               <tr>
-                <td key={'deploy-dialog-required-services-label' + index}>{label}</td>
-                <td key={'deploy-dialog-required-services-arch' + index}>{arch || 'N.A'}</td>
-                <td key={'deploy-dialog-required-services-org' + index}>{org}</td>
-                <td key={'deploy-dialog-required-services-version' + index}>{version}</td>
-                <td key={'deploy-dialog-required-services-version-range' + index}>{versionRange}</td>
+                <td key={'deploy-dialog-required-services-label' + index}>{serviceUrl}</td>
+                <td key={'deploy-dialog-required-services-arch' + index}>{serviceArch || 'N.A'}</td>
+                <td key={'deploy-dialog-required-services-org' + index}>{serviceOrgid}</td>
+                <td key={'deploy-dialog-required-services-version' + index}>{serviceVersions[0]?.version}</td>
               </tr>
               ))}
             </tbody>
           </table>
         </div>
         <form>
+          <input type="text" placeholder="Enter a name for your app" onChange={({ target }) => handleNameInputChange(target.value)} required />
           <label htmlFor="nodes">Choose a node where to deploy the app:</label>
           <select id="nodes" name="nodes">
-            {nodes.map(({ name }) => (
-              <option value={name}>{name}</option>
+            {(nodes ?? []).map(({ name }, index) => (
+              <option key={index} value={name}>{name}</option>
             ))}
           </select>
         </form>

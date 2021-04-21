@@ -7,7 +7,7 @@ import { displayModalRequisitionHide } from './commands';
 import './index.css';
 
 function DisplayDialog({ show, hide, app }) {
-  const { label, device, description, version, requiredServices } = app || {};
+  const { pattern, nodeType, version, registeredServices } = app || {};
   const dialog = createRef(null);
 
   // Create the listener to dialog's close button.
@@ -26,12 +26,12 @@ function DisplayDialog({ show, hide, app }) {
   return (
     <dds-dialog open={show} actions="false" ref={dialog}>
       <div slot="dds-dialog-header">
-        <h1 className="dds-header-text-3 app-name">{label} ({version})</h1>
+        <h1 className="dds-header-text-3 app-name">{pattern}</h1>
       </div>
       <div slot="dds-dialog-body">
-        <h2 className="dds-header-text-3 app-node">{device}</h2>
+        <h2 className="dds-header-text-3 app-node">{nodeType}</h2>
         <div className="more-info-description">
-          <p>{description}</p>
+          {/* <p>{description}</p> */}
           <div className="services">
             <h3 className="dds-header-text-4">Dependencies</h3>
             <table>
@@ -41,19 +41,30 @@ function DisplayDialog({ show, hide, app }) {
                   <th>Arch</th>
                   <th>Org</th>
                   <th>Version</th>
-                  <th>Version Range</th>
                 </tr>
               </thead>
               <tbody>
-              {(requiredServices ?? []).map(({ label = 'N.A', arch = 'N.A', org = 'N.A', version = 'N.A', versionRange = 'N.A' }, index) => (
-                <tr>
-                  <td key={'display-dialog-required-services-label' + index}>{label}</td>
-                  <td key={'display-dialog-required-services-arch' + index}>{arch || 'N.A'}</td>
-                  <td key={'display-dialog-required-services-org' + index}>{org}</td>
-                  <td key={'display-dialog-required-services-version' + index}>{version}</td>
-                  <td key={'display-dialog-required-services-version-range' + index}>{versionRange}</td>
-                </tr>
-                ))}
+              {(registeredServices ?? []).map(
+                (service, index) => (
+                  <tr key={'display-dialog-required-services' + index}>
+                    <td key={'display-dialog-required-services-pattern' + index}>
+                      {service.url || 'N.A'}
+                    </td>
+                    <td key={'display-dialog-required-services-arch' + index}>
+                      {service.properties.find(prop => prop.name === "arch").value || 'N.A'}
+                    </td>
+                    <td key={'display-dialog-required-services-org' + index}>
+                      {
+                        service.properties.find(prop => prop.name === "org") ?
+                        service.properties.find(prop => prop.name === "org").value : 'N.A'
+                      }
+                    </td>
+                    <td key={'display-dialog-required-services-version' + index}>
+                      {service.properties.find(prop => prop.name === "version").value || 'N.A'}
+                    </td>
+                  </tr>
+                )
+              )}
               </tbody>
             </table>
           </div>

@@ -13,3 +13,9 @@ export const APP_DEPLOYMENT_REQUISITION = defineAction(
   ['SUCCESS', 'FAILURE'],
   namespace
 );
+
+export const APP_UNINSTALL_REQUISITION = defineAction(
+  'APP_UNINSTALL_REQUISITION',
+  ['SUCCESS', 'FAILURE'],
+  namespace
+);

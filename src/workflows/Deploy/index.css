@@ -3,16 +3,21 @@ form {
   flex: 1 0 auto;
 }
 
-form label {
+form,
+form label,
+.submit-button-wrapper {
   margin: 1rem 0;
+}
+
+form label {
+  margin-left: auto;
 }
 
 form select {
   width: 150px;
   margin-top: auto;
   margin-bottom: auto;
-  margin-left: var(--dds-space-medium);
-  margin-right: auto;
+  margin-left: auto;
 }
 
 .submit-button-wrapper {
