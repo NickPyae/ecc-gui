@@ -145,7 +145,7 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 
 ### Build the Docker image
 
-When running locally, please update hosts file to resolve exchange-api server.
+When running locally, please update hosts file to resolve 'exchange-api' and 'anax-api' server.
 
 ```
 docker build -t hello-sally-app .
