@@ -145,7 +145,7 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 
 ### Build the Docker image
 
-When running locally, please update hosts file to resolve 'exchange-api' and 'anax-api' server.
+Please replace proxy_pass in nginx.conf
 
 ```
 docker build -t hello-sally-app .
@@ -153,8 +153,16 @@ docker build -t hello-sally-app .
 
 ### Run the Docker container
 
+Ensure file /root/nginx.conf exists
+
+
+Stop nginx container
 ```
-docker run -p 8080:80 hello-sally-app
+docker volume prune
+```
+
+```
+docker run -p 8080:80 --volume=/root/nginx.conf:/etc/nginx/conf.d/nginx.conf hello-sally-app
 ```
 
 And open your browser on http://localhost:8080
