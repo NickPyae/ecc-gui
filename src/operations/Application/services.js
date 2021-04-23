@@ -125,7 +125,7 @@ export async function deployApplication({ id, patternName }) {
       "inputs": [
         {
           "name": "KUIPER_IP",
-          "value": "192.168.18.63"
+          "value": "172.19.112.49"
         },
         {
           "name": "KUIPER_PORT",
@@ -141,7 +141,7 @@ export async function deployApplication({ id, patternName }) {
         },
         {
           "name": "INFLUXDB_TOKEN",
-          "value": "m8Btf1vDt5vDx6N7f_Yy0RxwvG0wxzvyjslMZ0XxmREtEpZWBsAhUcd5N020NRt2ZltldQlUiIpLD8Km3hcKjQ=="
+          "value": "R5m4CQI0RgQgU9BTfTa8gInVSRGReXG25UaL9iR3snpUqPXE8492onvisWeoqOLim7k3YROF70lvqBFVdIcm-Q=="
         },
         {
           "name": "INFLUXDB_CLOUD_TOKEN",
@@ -153,7 +153,7 @@ export async function deployApplication({ id, patternName }) {
         },
         {
           "name": "REDIS_IP",
-          "value": "192.168.18.63"
+          "value": "172.19.112.49"
         },
         {
           "name": "REDIS_PORT",

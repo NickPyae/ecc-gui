@@ -47,6 +47,7 @@ export function CatalogPage(
         <dds-tab-panel slot="panel">
           <div className="card-list">
             {(installedApps ?? []).map((app, index) => (
+              app.pattern ? (
               <dds-card header="true" footer="true" key={'installed-app-card' + index}>
                 { pendingUninstall ?
                   <dds-progress value="25" variant="info" size="large" type="indeterminate">
@@ -55,17 +56,18 @@ export function CatalogPage(
                   </dds-progress>
                 : '' }
                 <div slot="header">
-                  <h1 className="dds-header-text-3 app-name">{app.name}</h1>
+                  <h1 className="dds-header-text-3 app-name">{app.pattern}</h1>
                   {/* <h2 className="dds-header-text-3 app-node">{app.name}</h2> */}
                 </div>
                 <div slot="body">
-                  <p className="dds-body-text">{app.pattern}</p>
+                  <p className="dds-body-text">Node: {app.name}</p>
                 </div>
                 <div slot="footer">
                   <dds-button type="tertiary" onClick={() => showDisplayModal(app)}>More info</dds-button>
                   <dds-button type="tertiary" onClick={() => deleteApp(app)}>Uninstall</dds-button>
                 </div>
               </dds-card>
+              ) : ""
             ))}
           </div>
         </dds-tab-panel>
