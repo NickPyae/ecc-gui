@@ -151,21 +151,52 @@ Please replace proxy_pass in nginx.conf
 docker build -t hello-sally-app .
 ```
 
-### Run the Docker container
+### Run the Docker container (Local)
 
 Ensure file /root/nginx.conf exists
 
 
-Stop nginx container
+When making changes to nginx.conf, ensure the previous volume is deleted. 
+
+It can be done with 
+``` 
+docker volume rm [VOLUME] 
+```
+, or by stopping this container and doing
 ```
 docker volume prune
 ```
 
+Create and start container
 ```
 docker run -p 8080:80 --volume=/root/nginx.conf:/etc/nginx/conf.d/nginx.conf hello-sally-app
 ```
 
 And open your browser on http://localhost:8080
+
+
+### Run the Docker container (Server)
+
+Ensure file /root/nginx.conf exists
+
+
+When making changes to nginx.conf, ensure the previous volume is deleted. 
+
+It can be done with 
+``` 
+docker volume rm [VOLUME] 
+```
+, or by stopping this container and doing
+```
+docker volume prune
+```
+
+Create and start container
+```
+docker run -it --network=host --volume=/root/nginx.conf:/etc/nginx/conf.d/nginx.conf amaas-eos-mw1.cec.lab.emc.com:5070/hellosally/hello-sally-web:0.0.4
+```
+
+And open your browser on http://localhost:80
 
 
 ## Learn More
