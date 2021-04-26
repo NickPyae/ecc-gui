@@ -76,7 +76,7 @@ function DeploymentDialog({ show, hide, nodes, getNodeList, app, deploy }) {
             </thead>
             <tbody>
             {(services ?? []).map(({ serviceUrl = 'N.A', serviceArch = 'N.A', serviceOrgid = 'N.A', serviceVersions = 'N.A' }, index) => (
-              <tr>
+              <tr key={index}>
                 <td key={'deploy-dialog-required-services-label' + index}>{serviceUrl}</td>
                 <td key={'deploy-dialog-required-services-arch' + index}>{serviceArch || 'N.A'}</td>
                 <td key={'deploy-dialog-required-services-org' + index}>{serviceOrgid}</td>

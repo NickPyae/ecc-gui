@@ -29,7 +29,7 @@ const formatNodeDetails = nodes => ({
     heartbeatIntervalsMin: node.heartbeatIntervals.minInterval,
     heartbeatIntervalsMax: node.heartbeatIntervals.maxInterval,
     heartbeatIntervalsAdj: node.heartbeatIntervals.intervalAdjustment,
-    numRegisteredServices: node.registeredServices ? node.registeredServices.length : 0,
+    numRegisteredServices: node.services ? node.services.length : 0,
     numErrors: node.errors ? node.errors.length : 0
   })),
   criticalCount: nodes.filter(({ errors }) => errors !== null && errors.length > 5).length, // DEV
