@@ -78,7 +78,52 @@ export async function deployApplication({ id, patternName }) {
         ]
       }
     ],
-    "userInput": [],
+    "userInput": [
+      {
+        "serviceOrgid": "dellsg",
+        "serviceUrl": "com.eos2git.cec.lab.emc.hellosally",
+        "serviceArch": "amd64",
+        "serviceVersionRange": "[0.0.0,INFINITY)",
+        "inputs": [
+          {
+            "name": "KUIPER_IP",
+            "value": "172.19.10.52"
+          },
+          {
+            "name": "KUIPER_PORT",
+            "value": "48075"
+          },
+          {
+            "name": "INFLUXDB_IP",
+            "value": "192.168.2.152"
+          },
+          {
+            "name": "INFLUXDB_PORT",
+            "value": "8086"
+          },
+          {
+            "name": "INFLUXDB_TOKEN",
+            "value": "m8Btf1vDt5vDx6N7f_Yy0RxwvG0wxzvyjslMZ0XxmREtEpZWBsAhUcd5N020NRt2ZltldQlUiIpLD8Km3hcKjQ=="
+          },
+          {
+            "name": "INFLUXDB_CLOUD_TOKEN",
+            "value": "CU4e0jPsdqeSVRL5niynNFJt7pRKG5Xx6ssnPp2Vt4Azd7LFjK0D7Ofg1ElAnfnfW9iJldgLUqDPoFXAbzZ1LA=="
+          },
+          {
+            "name": "BUCKET_NAME",
+            "value": "hello-sally-frk"
+          },
+          {
+            "name": "REDIS_IP",
+            "value": "172.19.10.52"
+          },
+          {
+            "name": "REDIS_PORT",
+            "value": "6379"
+          }
+        ]
+      }
+    ],
     "msgEndPoint": "",
     "publicKey": "ABCDEF", // DEV
     "heartbeatIntervals": {
@@ -125,7 +170,7 @@ export async function deployApplication({ id, patternName }) {
       "inputs": [
         {
           "name": "KUIPER_IP",
-          "value": "172.19.112.49"
+          "value": "172.19.10.52"
         },
         {
           "name": "KUIPER_PORT",
@@ -133,7 +178,7 @@ export async function deployApplication({ id, patternName }) {
         },
         {
           "name": "INFLUXDB_IP",
-          "value": "192.168.1.152"
+          "value": "192.168.2.152"
         },
         {
           "name": "INFLUXDB_PORT",
@@ -141,7 +186,7 @@ export async function deployApplication({ id, patternName }) {
         },
         {
           "name": "INFLUXDB_TOKEN",
-          "value": "R5m4CQI0RgQgU9BTfTa8gInVSRGReXG25UaL9iR3snpUqPXE8492onvisWeoqOLim7k3YROF70lvqBFVdIcm-Q=="
+          "value": "m8Btf1vDt5vDx6N7f_Yy0RxwvG0wxzvyjslMZ0XxmREtEpZWBsAhUcd5N020NRt2ZltldQlUiIpLD8Km3hcKjQ=="
         },
         {
           "name": "INFLUXDB_CLOUD_TOKEN",
@@ -149,11 +194,11 @@ export async function deployApplication({ id, patternName }) {
         },
         {
           "name": "BUCKET_NAME",
-          "value": "hello-sally"
+          "value": "hello-sally-frk"
         },
         {
           "name": "REDIS_IP",
-          "value": "172.19.112.49"
+          "value": "172.19.10.52"
         },
         {
           "name": "REDIS_PORT",
@@ -169,13 +214,13 @@ export async function deployApplication({ id, patternName }) {
   const initNode = () => fetch(HZN_AGENT_NODE_API_ENDPOINT, { ...opts, method: 'POST', body: JSON.stringify(nodeConfig) });
   const updateNodePolicy = () => fetch(`${HZN_AGENT_NODE_API_ENDPOINT}/policy`, { ...opts, method: 'POST', body: JSON.stringify(nodePolicy) });
   const registerNode = () => fetch(`${HZN_AGENT_NODE_API_ENDPOINT}/configstate`, { ...opts, method: 'PUT', body: JSON.stringify(nodeState) });
-  const updateNodeUserInput = () => fetch(`${HZN_AGENT_NODE_API_ENDPOINT}/userinput`, { ...opts, method: 'POST', body: JSON.stringify(userInput) });
+  // const updateNodeUserInput = () => fetch(`${HZN_AGENT_NODE_API_ENDPOINT}/userinput`, { ...opts, method: 'POST', body: JSON.stringify(userInput) });
 
   await createNode();
   await initNode();
   await updateNodePolicy();
-  await registerNode();
-  return await updateNodeUserInput();
+  return await registerNode();
+  // return await updateNodeUserInput();
 }
 
 // As of now, there is no need to pass any id.
